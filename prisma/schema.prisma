@@ -10,7 +10,7 @@ datasource db {
 
 model Car {
   id          String   @id @default(cuid())
-  description String
+  description String?
   brandId     String
   brand       Brand    @relation(fields: [brandId], references: [id])
   createdAt   DateTime @default(now())
