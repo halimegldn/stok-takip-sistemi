@@ -34,6 +34,18 @@ export async function GetModels() {
     return models;
 }
 
+export async function GetBrandsWithCarCounts() {
+    const brands = await prisma.brand.findMany({
+        select: {
+            id: true,
+            name: true,
+            _count: { select: { cars: true } },
+        },
+        orderBy: { createdAt: "desc" },
+    });
+    return brands;
+}
+
 export async function getTotals() {
     const [totalCars, totalBrands, totalModels] = await Promise.all([
         prisma.car.count(),
