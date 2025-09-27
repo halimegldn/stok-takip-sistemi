@@ -19,20 +19,60 @@ export function BrandChart() {
                 <CardTitle>Marka Dağılımı</CardTitle>
                 <CardDescription>Stokta bulunan araç sileceklerinin marka bazında dağılımı</CardDescription>
             </CardHeader>
+
             <CardContent>
                 <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={data}>
-                        <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                        <XAxis dataKey="marka" className="text-xs" tick={{ fontSize: 12 }} />
-                        <YAxis className="text-xs" tick={{ fontSize: 12 }} />
-                        <Tooltip
-                            contentStyle={{
-                                backgroundColor: "hsl(var(--card))",
-                                border: "1px solid hsl(var(--border))",
-                                borderRadius: "8px",
-                            }}
+                    <BarChart data={data} barCategoryGap={18}>
+                        {/* yalnızca grafik stili */}
+                        <defs>
+                            <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                                {/* oklch değişkenlerini doğrudan kullan */}
+                                <stop offset="0%" stopColor="var(--primary)" stopOpacity={0.95} />
+                                <stop offset="100%" stopColor="var(--primary)" stopOpacity={0.55} />
+                            </linearGradient>
+                        </defs>
+
+                        <CartesianGrid
+                            strokeDasharray="3 3"
+                            stroke="var(--border)"
+                            opacity={0.5}
+                            vertical={false}
                         />
-                        <Bar dataKey="adet" fill="hsl(var(--accent))" radius={[4, 4, 0, 0]} />
+
+                        <XAxis
+                            dataKey="marka"
+                            axisLine={false}
+                            tickLine={false}
+                            tickMargin={10}
+                            tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
+                        />
+
+                        <YAxis
+                            axisLine={false}
+                            tickLine={false}
+                            width={36}
+                            tick={{ fontSize: 12, fill: "var(--muted-foreground)" }}
+                        />
+
+                        <Tooltip
+                            wrapperStyle={{ borderRadius: 10 }}
+                            contentStyle={{
+                                backgroundColor: "var(--card)",
+                                border: "1px solid var(--border)",
+                            }}
+                            // SVG cursor için: fill + opacity ayrı veriliyor
+                            cursor={{ fill: "var(--muted)", opacity: 0.25 }}
+                            formatter={(v: number) => [`${v.toLocaleString("tr-TR")} adet`, ""]}
+                        />
+
+                        <Bar
+                            dataKey="adet"
+                            fill="url(#barGradient)"
+                            isAnimationActive
+                            animationDuration={600}
+                            animationBegin={80}
+                            activeBar={{ fill: "var(--primary)" }}
+                        />
                     </BarChart>
                 </ResponsiveContainer>
             </CardContent>

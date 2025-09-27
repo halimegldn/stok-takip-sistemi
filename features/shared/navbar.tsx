@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { Car, BarChart3, Plus, Filter } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { ModeToggle } from "./theme-button"
 
 export function Navbar() {
     const pathname = usePathname()
@@ -41,6 +42,7 @@ export function Navbar() {
                                     asChild
                                     className={cn("flex items-center space-x-2", isActive && "bg-accent text-accent-foreground")}
                                 >
+
                                     <Link href={item.href}>
                                         <Icon className="h-4 w-4" />
                                         <span>{item.name}</span>
@@ -48,6 +50,7 @@ export function Navbar() {
                                 </Button>
                             )
                         })}
+                        <ModeToggle />
                     </div>
                 </div>
             </div>
