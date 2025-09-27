@@ -34,3 +34,12 @@ export async function GetModels() {
     return models;
 }
 
+export async function getTotals() {
+    const [totalCars, totalBrands, totalModels] = await Promise.all([
+        prisma.car.count(),
+        prisma.brand.count(),
+        prisma.model.count(),
+    ]);
+
+    return { totalCars, totalBrands, totalModels };
+}
